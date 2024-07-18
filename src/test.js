@@ -1,5 +1,5 @@
-const sortableList = document.getElementById('#gallery-list');
-const items = sortableList.getElementById('#gallery-list-item');
+const sortableList = document.getElementById('gallery-list');
+const items = sortableList.querySelectorAll('#gallery-list-item');
 
 items.forEach((item) => {
   item.addEventListener('dragstart', () => {
