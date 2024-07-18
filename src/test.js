@@ -1,29 +1,64 @@
-const sortableList = document.getElementById('gallery-list');
-const items = sortableList.querySelectorAll('#gallery-list-item');
+document.addEventListener('DOMContentLoaded', () => {
+  const sortableList = document.querySelector('.file-list-holder');
+  const itemsInput = document.getElementById('items');
 
-items.forEach((item) => {
-  item.addEventListener('dragstart', () => {
-    // Adding dragging class to item after a delay
-    setTimeout(() => item.classList.add('dragging'), 0);
+  // Function to initialize drag events on items
+  const initializeDragEvents = (item) => {
+    item.addEventListener('dragstart', (e) => {
+      e.target.classList.add('dragging');
+    });
+
+    item.addEventListener('dragend', (e) => {
+      e.target.classList.remove('dragging');
+      updateInputOrder();
+    });
+  };
+
+  // Function to handle dragover event
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    const draggingItem = document.querySelector('.dragging');
+    if (!draggingItem) return;
+
+    const siblings = Array.from(sortableList.querySelectorAll('.file-item-gallery:not(.dragging)'));
+    const nextSibling = siblings.find(
+      (sibling) => e.clientY <= sibling.getBoundingClientRect().top + sibling.offsetHeight / 2
+    );
+
+    if (nextSibling) {
+      sortableList.insertBefore(draggingItem, nextSibling);
+    } else {
+      sortableList.appendChild(draggingItem);
+    }
+  };
+
+  // Function to update the input order
+  const updateInputOrder = () => {
+    const items = Array.from(sortableList.querySelectorAll('.file-item-gallery'));
+    const order = items.map((item) => item.getAttribute('wz_id'));
+    itemsInput.value = JSON.stringify(order);
+  };
+
+  // Initialize drag events on existing items
+  document.querySelectorAll('.file-item-gallery').forEach(initializeDragEvents);
+
+  // Handle the addition of new items
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType === Node.ELEMENT_NODE && node.classList.contains('file-item-gallery')) {
+          initializeDragEvents(node);
+        }
+      });
+    });
   });
-  // Removing dragging class from item on dragend event
-  item.addEventListener('dragend', () => item.classList.remove('dragging'));
+
+  observer.observe(sortableList, { childList: true });
+
+  // Event listeners for sortable list
+  sortableList.addEventListener('dragover', handleDragOver);
+  sortableList.addEventListener('dragenter', (e) => e.preventDefault());
+
+  // Initial order update
+  updateInputOrder();
 });
-
-const initSortableList = (e) => {
-  e.preventDefault();
-  const draggingItem = document.querySelector('.dragging');
-  // Getting all items except currently dragging and making array of them
-  let siblings = [...sortableList.querySelectorAll('#gallery-list-item:not(.dragging)')];
-
-  // Finding the sibling after which the dragging item should be placed
-  let nextSibling = siblings.find((sibling) => {
-    return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
-  });
-
-  // Inserting the dragging item before the found sibling
-  sortableList.insertBefore(draggingItem, nextSibling);
-};
-
-sortableList.addEventListener('dragover', initSortableList);
-sortableList.addEventListener('dragenter', (e) => e.preventDefault());
