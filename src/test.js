@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
   const sortableList = document.querySelector('.file-list-holder');
-  const itemsInput = document.getElementById('items');
 
   // Function to initialize drag events on items
   const initializeDragEvents = (item) => {
@@ -10,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     item.addEventListener('dragend', (e) => {
       e.target.classList.remove('dragging');
-      updateInputOrder();
     });
   };
 
@@ -32,13 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Function to update the input order
-  const updateInputOrder = () => {
-    const items = Array.from(sortableList.querySelectorAll('.file-item-gallery'));
-    const order = items.map((item) => item.getAttribute('wz_id'));
-    itemsInput.value = JSON.stringify(order);
-  };
-
   // Initialize drag events on existing items
   document.querySelectorAll('.file-item-gallery').forEach(initializeDragEvents);
 
@@ -58,7 +49,4 @@ document.addEventListener('DOMContentLoaded', () => {
   // Event listeners for sortable list
   sortableList.addEventListener('dragover', handleDragOver);
   sortableList.addEventListener('dragenter', (e) => e.preventDefault());
-
-  // Initial order update
-  updateInputOrder();
 });
