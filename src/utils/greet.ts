@@ -1,3 +1,5 @@
+// Not used in drag and sort
+
 import { getPublishDate } from '@finsweet/ts-utils';
 
 /**

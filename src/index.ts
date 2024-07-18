@@ -1,3 +1,5 @@
+// Not used in drag and sort
+
 import { greetUser } from '$utils/greet';
 
 window.Webflow ||= [];
