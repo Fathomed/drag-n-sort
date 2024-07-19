@@ -1,3 +1,4 @@
+// used on Angler's Planet image gallery drag and sort
 document.addEventListener('DOMContentLoaded', () => {
   const sortableList = document.querySelector('.file-list-holder');
 
@@ -31,7 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Initialize drag events on existing items
-  document.querySelectorAll('.file-item-gallery').forEach(initializeDragEvents);
+  const initializeExistingItems = () => {
+    document.querySelectorAll('.file-item-gallery').forEach(initializeDragEvents);
+  };
 
   // Handle the addition of new items
   const observer = new MutationObserver((mutations) => {
@@ -49,4 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Event listeners for sortable list
   sortableList.addEventListener('dragover', handleDragOver);
   sortableList.addEventListener('dragenter', (e) => e.preventDefault());
+
+  // Initial setup
+  initializeExistingItems();
 });
