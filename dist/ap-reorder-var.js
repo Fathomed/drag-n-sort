@@ -1,1 +1,43 @@
-"use strict";(()=>{window.Wized=window.Wized||[];window.Wized.push(s=>{let l=document.getElementById("gallery-list"),i=()=>{let r=l.querySelectorAll("#gallery-list-item"),t=Array.from(r).filter(e=>e.getAttribute("status")==="uploaded").map(e=>({cf_id:e.getAttribute("cf_id"),name:e.getAttribute("name"),file_url:e.getAttribute("file_url")}));s.data.v.galleryImgOrder=t};new MutationObserver(r=>{let t=!1;r.forEach(e=>{(e.type==="childList"||e.type==="attributes"&&e.attributeName==="status"&&e.target.getAttribute("status")==="uploaded")&&(t=!0)}),t&&i()}).observe(l,{childList:!0,attributes:!0,subtree:!0,attributeFilter:["status"]}),i()});})();
+"use strict";
+(() => {
+  // bin/live-reload.js
+  new EventSource(`${"http://localhost:3000"}/esbuild`).addEventListener("change", () => location.reload());
+
+  // src/ap-reorder-var.js
+  window.Wized = window.Wized || [];
+  window.Wized.push((Wized) => {
+    const galleryList = document.getElementById("gallery-list");
+    const updateGalleryImgOrder = () => {
+      const galleryItems = galleryList.querySelectorAll("#gallery-list-item");
+      const imgOrder = Array.from(galleryItems).filter((item) => item.getAttribute("status") === "uploaded").map((item) => ({
+        cf_id: item.getAttribute("cf_id"),
+        name: item.getAttribute("name"),
+        file_url: item.getAttribute("file_url")
+      }));
+      Wized.data.v.galleryImgOrder = imgOrder;
+    };
+    const observer = new MutationObserver((mutations) => {
+      let needsUpdate = false;
+      mutations.forEach((mutation) => {
+        if (mutation.type === "childList") {
+          needsUpdate = true;
+        } else if (mutation.type === "attributes" && mutation.attributeName === "status") {
+          if (mutation.target.getAttribute("status") === "uploaded") {
+            needsUpdate = true;
+          }
+        }
+      });
+      if (needsUpdate) {
+        updateGalleryImgOrder();
+      }
+    });
+    observer.observe(galleryList, {
+      childList: true,
+      attributes: true,
+      subtree: true,
+      attributeFilter: ["status"]
+    });
+    updateGalleryImgOrder();
+  });
+})();
+//# sourceMappingURL=ap-reorder-var.js.map
