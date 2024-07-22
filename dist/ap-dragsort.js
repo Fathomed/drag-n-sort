@@ -1,1 +1,50 @@
-"use strict";(()=>{document.addEventListener("DOMContentLoaded",()=>{let r=document.querySelector(".file-list-holder"),i=e=>{e.addEventListener("dragstart",t=>{t.target.classList.add("dragging")}),e.addEventListener("dragend",t=>{t.target.classList.remove("dragging")})},d=e=>{e.preventDefault();let t=document.querySelector(".dragging");if(!t)return;let s=Array.from(r.querySelectorAll(".file-item-gallery:not(.dragging)")).find(a=>e.clientY<=a.getBoundingClientRect().top+a.offsetHeight/2);s?r.insertBefore(t,s):r.appendChild(t)},o=()=>{document.querySelectorAll(".file-item-gallery").forEach(i)};new MutationObserver(e=>{e.forEach(t=>{t.addedNodes.forEach(n=>{n.nodeType===Node.ELEMENT_NODE&&n.classList.contains("file-item-gallery")&&i(n)})})}).observe(r,{childList:!0}),r.addEventListener("dragover",d),r.addEventListener("dragenter",e=>e.preventDefault()),o()});})();
+"use strict";
+(() => {
+  // bin/live-reload.js
+  new EventSource(`${"http://localhost:3000"}/esbuild`).addEventListener("change", () => location.reload());
+
+  // src/ap-dragsort.js
+  document.addEventListener("DOMContentLoaded", () => {
+    const sortableList = document.querySelector(".file-list-holder");
+    const initializeDragEvents = (item) => {
+      item.addEventListener("dragstart", (e) => {
+        e.target.classList.add("dragging");
+      });
+      item.addEventListener("dragend", (e) => {
+        e.target.classList.remove("dragging");
+      });
+    };
+    const handleDragOver = (e) => {
+      e.preventDefault();
+      const draggingItem = document.querySelector(".dragging");
+      if (!draggingItem)
+        return;
+      const siblings = Array.from(sortableList.querySelectorAll(".file-item-gallery:not(.dragging)"));
+      const nextSibling = siblings.find(
+        (sibling) => e.clientY <= sibling.getBoundingClientRect().top + sibling.offsetHeight / 2
+      );
+      if (nextSibling) {
+        sortableList.insertBefore(draggingItem, nextSibling);
+      } else {
+        sortableList.appendChild(draggingItem);
+      }
+    };
+    const initializeExistingItems = () => {
+      document.querySelectorAll(".file-item-gallery").forEach(initializeDragEvents);
+    };
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === Node.ELEMENT_NODE && node.classList.contains("file-item-gallery")) {
+            initializeDragEvents(node);
+          }
+        });
+      });
+    });
+    observer.observe(sortableList, { childList: true });
+    sortableList.addEventListener("dragover", handleDragOver);
+    sortableList.addEventListener("dragenter", (e) => e.preventDefault());
+    initializeExistingItems();
+  });
+})();
+//# sourceMappingURL=ap-dragsort.js.map
