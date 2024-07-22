@@ -1,6 +1,6 @@
 {
   "name": "@Fathomed/drag-n-sort",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Drag'n'sort plus Update variable scripts for Angler's Planet multi-image uploader",
   "homepage": "https://github.com/Fathomed/drag-n-sort#readme",
   "license": "ISC",
@@ -11,10 +11,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Fathomed/drag-n-sort.git"
+    "url": "git+https://github.com/finsweet/developer-starter.git"
   },
   "bugs": {
-    "url": "https://github.com/Fathomed/drag-n-sort/issues/issues"
+    "url": "https://github.com/finsweet/developer-starter/issues"
   },
   "type": "module",
   "main": "src/index.ts",
