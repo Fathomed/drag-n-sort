@@ -1,5 +1,12 @@
 # @Fathomed/drag-n-sort
 
+## 1.0.8
+
+### Patch Changes
+
+- c05076c: good to go
+- 943d2c0: testing
+
 ## 1.0.7
 
 ### Patch Changes
