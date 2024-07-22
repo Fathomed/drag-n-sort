@@ -1,11 +1,6 @@
 {
-<<<<<<< HEAD
-  "name": "@fathomed/drag-n-sort",
-  "version": "1.0.6",
-=======
   "name": "@Fathomed/drag-n-sort",
   "version": "1.0.7",
->>>>>>> 80dce04a1890a8b3f7d3bbc8ffa6bd0217105be7
   "description": "Drag'n'sort plus Update variable scripts for Angler's Planet multi-image uploader",
   "homepage": "https://github.com/Fathomed/drag-n-sort#readme",
   "license": "ISC",
