@@ -1,5 +1,11 @@
 # @Fathomed/drag-n-sort
 
+## 2.0.0
+
+### Major Changes
+
+- 9433e91: minified files
+
 ## 1.0.8
 
 ### Patch Changes
