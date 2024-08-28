@@ -1,5 +1,11 @@
 # @Fathomed/drag-n-sort
 
+## 2.0.5
+
+### Patch Changes
+
+- eff105b: changeset update
+
 ## 2.0.2
 
 ### Patch Changes
