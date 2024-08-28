@@ -1,5 +1,11 @@
 # @Fathomed/drag-n-sort
 
+## 2.0.2
+
+### Patch Changes
+
+- 97ae508: added RTE file
+
 ## 2.0.0
 
 ### Major Changes
